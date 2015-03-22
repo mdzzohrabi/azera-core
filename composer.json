@@ -1,0 +1,24 @@
+{
+    "name": "mdzzohrabi/azera-core",
+    "description": "Azera Core",
+    "type": "library",
+    "keywords": [
+        "core",
+        "azera",
+    ],
+    "authors": [
+        {
+            "name": "Masoud Zohrabi",
+            "email": "mdzzohrabi@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Azera\\Core\\": ""
+        }
+    }
+}
