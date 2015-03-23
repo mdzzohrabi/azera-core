@@ -16,6 +16,9 @@
     "require": {
         "php": ">=5.3"
     },
+    "suggest": {
+        "mdzzohrabi/azera-queryable": "Gives you more productivy"
+    },
     "autoload": {
         "psr-4": {
             "Azera\\Core\\": ""
