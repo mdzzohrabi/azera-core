@@ -38,6 +38,27 @@ class Collection implements Iterator, ArrayAccess, Serializable {
 		$this->items = $ref;
 	}
 
+	public function indexOf( $item )
+	{
+		return array_search( $item , $this->items );
+	}
+
+	public function remove( $item )
+	{
+		if ( $this->contains( $item ) )
+			unset( $this->items[ array_search( $item , $this->items ) ] );
+	}
+
+	public function add( $item )
+	{
+		$this->items[] = $item;
+	}
+
+	public function contains( $item )
+	{
+		return in_array( $this->items , $item );
+	}
+
 	public function asQueryable() {
 		return new \Azera\Component\Queryable\Queryable( $this->items );
 	}
