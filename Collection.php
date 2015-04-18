@@ -59,6 +59,11 @@ class Collection implements Iterator, ArrayAccess, Serializable {
 		return in_array( $this->items , $item );
 	}
 
+	public function has( $key )
+	{
+		return isset( $this->items[ $key ] );
+	}
+
 	public function asQueryable() {
 		return new \Azera\Component\Queryable\Queryable( $this->items );
 	}
