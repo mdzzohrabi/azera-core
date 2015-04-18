@@ -26,44 +26,127 @@ class Collection implements Iterator, ArrayAccess, Serializable {
 		return '["' . str_replace( '.' , '"]["' , $key ) . '"]';
 	}
 
+	/**
+	 * Retreive node value
+	 * 
+	 * ```php
+	 * Collection->get( 'Post.Comment' );
+	 * ```
+	 * 
+	 * @param string $key
+	 * @return mixed
+	 */
 	public function get( $key ) {
 		return eval('return $this->items' . $this->nodelize($key) . ';');
 	}
 
+	/**
+	 * Set node
+	 * 
+	 * ```php
+	 * Collection->set( 'Post.Comment' , 'Hello !' );
+	 * ```
+	 * 
+	 * @param string $key
+	 * @param mixed $value
+	 */
 	public function set( $key , $value ) {
 		eval( '$this->items' . $this->nodelize( $key ) . ' = $value;' );
 	}
 
+	/**
+	 * Set items repository by reference
+	 * 
+	 * @param array $ref
+	 */
 	public function setReference( &$ref ) {
 		$this->items = $ref;
 	}
 
+	/**
+	 * Return indexOf an item
+	 * 
+	 * ```php
+	 * Collection->indexOf( 'Apple' );	// Return 2
+	 * ```
+	 * 
+	 * @param mixed $item
+	 * @return int|string
+	 */
 	public function indexOf( $item )
 	{
 		return array_search( $item , $this->items );
 	}
 
+	/**
+	 * Remove an item from list
+	 * 
+	 * @param mixed $item
+	 */
 	public function remove( $item )
 	{
 		if ( $this->contains( $item ) )
 			unset( $this->items[ array_search( $item , $this->items ) ] );
 	}
 
+	/**
+	 * Add an item to list
+	 * 
+	 * @param mixed $item
+	 */
 	public function add( $item )
 	{
 		$this->items[] = $item;
 	}
 
+	/**
+	 * Check if an item exists
+	 * 
+	 * @param mixed $item
+	 * @return boolean
+	 */
 	public function contains( $item )
 	{
 		return in_array( $this->items , $item );
 	}
 
+	/**
+	 * Check if a key exists
+	 * 
+	 * @param int|string $key
+	 * @return boolean
+	 */
 	public function has( $key )
 	{
 		return isset( $this->items[ $key ] );
 	}
 
+	/**
+	 * Retreive list as array
+	 * 
+	 * @return array
+	 */
+	public function toArray()
+	{
+		return $this->items;
+	}
+
+	/**
+	 * Retreive list as array
+	 * 
+	 * @param array $keys
+	 * @return array
+	 */
+	public function getItems( $keys = null )
+	{
+		if ( $keys )
+			return array_intersect_key( $this->items , array_flip( $keys ) );
+		return $this->items;
+	}
+
+	/**
+	 * Get Queryable object
+	 */
 	public function asQueryable() {
 		return new \Azera\Component\Queryable\Queryable( $this->items );
 	}

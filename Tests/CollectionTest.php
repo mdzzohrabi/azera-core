@@ -31,6 +31,10 @@ class CollectionTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( [ 'name' => 'Personal' , 'author' => 'Masoud Zohrabi' ] , $b['Blog'] );
 		$this->assertEquals( 'Navid' , $b->get('Users-2.0') );
 
+		$this->assertEquals( [
+				'Users-1'	=> [ 'Alireza' , 'Masoud' ]
+			] , $arr->getItems( [ 'Users-1' ] ) );
+
 
 	}
 
