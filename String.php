@@ -189,5 +189,15 @@ class String {
 
 	}
 
+	/**
+	 * StringBuilder
+	 * 
+	 * @return Azera\Core\StringBuilder
+	 */
+	public static function builder( $string = null )
+	{
+		return new StringBuilder( $string );
+	}
+
 }
 ?>
