@@ -82,21 +82,43 @@ class Collection implements Iterator, ArrayAccess, Serializable {
 	 * Remove an item from list
 	 * 
 	 * @param mixed $item
+	 * @return Azera\Core\Collection
 	 */
-	public function remove( $item )
+	public function remove( ...$items )
 	{
-		if ( $this->contains( $item ) )
-			unset( $this->items[ array_search( $item , $this->items ) ] );
+
+		foreach ( $items as $item )
+		if ( ( $index = $this->indexOf( $item ) ) !== null )
+			unset( $this->items[ $index ] );
+
+		return $this;
+	}
+
+	/**
+	 * Remove key from collection
+	 * 
+	 * @param  string|int $key Key
+	 * @return Azera\Core\Collection
+	 */
+	public function removeKey( ...$keys )
+	{
+
+		foreach ( $keys as $key )
+			unset( $this->items[ $key ] );
+
+		return $this;
 	}
 
 	/**
 	 * Add an item to list
 	 * 
 	 * @param mixed $item
+	 * @return Azera\Core\Collection
 	 */
-	public function add( $item )
+	public function add( ...$items )
 	{
-		$this->items[] = $item;
+		$this->items = array_merge( $this->items , $items );
+		return $this;
 	}
 
 	/**
@@ -107,7 +129,7 @@ class Collection implements Iterator, ArrayAccess, Serializable {
 	 */
 	public function contains( $item )
 	{
-		return in_array( $this->items , $item );
+		return in_array( $item , $this->items );
 	}
 
 	/**
