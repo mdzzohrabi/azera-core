@@ -49,21 +49,21 @@ class StringBuilder implements ArrayAccess, Iterator
 		return strpos( $this->buffer , $str );
 	}
 
-	public function append( $string )
+	public function append( $string , ...$params )
 	{
-		$this->buffer .= $string;
+		$this->buffer .= $params ? sprintf( $string , $params ) : $string;
 		return $this;
 	}
 
-	public function write( $string )
+	public function write( $string , ...$params )
 	{
-		$this->buffer .= $string;
+		$this->buffer .= $params ? sprintf( $string , ...$params ) : $string;
 		return $this;
 	}
 
-	public function writeln( $string )
+	public function writeln( $string , ...$params )
 	{
-		$this->buffer .= $string . PHP_EOL;
+		$this->buffer .= ( $params ? sprintf( $string , ...$params ) : $string ) . PHP_EOL;
 		return $this;
 	}
 

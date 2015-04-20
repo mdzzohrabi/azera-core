@@ -33,6 +33,11 @@ class StringBuilderTest extends \PHPUnit_Framework_TestCase
 				( new StringBuilder( 'Hello' ) )->insert( 3 , '_' )
 			);
 
+		$this->assertEquals(
+				'Dear, Masoud',
+				(new StringBuilder)->write( 'Dear, %s' , 'Masoud' )->toString()
+			);
+
 	}
 
 }
