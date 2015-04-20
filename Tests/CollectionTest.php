@@ -35,6 +35,27 @@ class CollectionTest extends \PHPUnit_Framework_TestCase {
 				'Users-1'	=> [ 'Alireza' , 'Masoud' ]
 			] , $arr->getItems( [ 'Users-1' ] ) );
 
+		$this->assertTrue( ( new Collection( [ 'Hello' , 'Goodbye' ] ) )->contains( 'Hello' ) );
+
+		$this->assertTrue( $arr->contains( [ 'Alireza' , 'Masoud' ] ) );
+
+		$this->assertTrue( $arr->has( 'Users-1' ) );
+
+		$this->assertEquals( 'Users-1' , $arr->indexOf( [ 'Alireza' , 'Masoud' ] ) );
+
+		$this->assertFalse( $arr->remove( [ 'Alireza' , 'Masoud' ] )->contains( [ 'Alireza' , 'Masoud' ] ) );
+
+		$this->assertFalse( $arr->has( 'Users-1' ) );
+
+		$this->assertCount( 1 , $arr );
+
+		$this->assertCount( 3 , $arr->add( 'Masoud' )->add( 'Alireza' ) );
+
+		$this->assertCount( 5 , $arr->add( 'Reza' , 'Mahmood' ) );
+
+		$this->assertCount( 1 , $arr->remove( 'Masoud' , 'Reza' , 'Mahmood' , 'Alireza' ) );
+
+		$this->assertFalse( $arr->removeKey( 'Users-2' )->has( 'Users-2' ) ); 
 
 	}
 
