@@ -11,6 +11,7 @@ class StringBuilder implements ArrayAccess, Iterator
 	
 	protected $buffer = '';
 	protected $cursor = 0;
+	protected $indent = 0;
 
 	protected function getLength()
 	{
@@ -18,9 +19,22 @@ class StringBuilder implements ArrayAccess, Iterator
 	}
 
 
+
 	public function __construct( $string = null )
 	{
 		$this->buffer = $string;
+	}
+
+	public function indent()
+	{
+		$this->indent++;
+		return $this;
+	}
+
+	public function outdent()
+	{
+		$this->indent--;
+		return $this;
 	}
 
 	public function format( ...$params )
@@ -63,7 +77,13 @@ class StringBuilder implements ArrayAccess, Iterator
 
 	public function writeln( $string , ...$params )
 	{
-		$this->buffer .= ( $params ? sprintf( $string , ...$params ) : $string ) . PHP_EOL;
+		$this->buffer .= str_repeat( "\t" , $this->indent ) . ( $params ? sprintf( $string , ...$params ) : $string ) . PHP_EOL;
+		return $this;
+	}
+
+	public function line()
+	{
+		$this->buffer .= PHP_EOL;
 		return $this;
 	}
 
