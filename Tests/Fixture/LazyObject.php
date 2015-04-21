@@ -15,6 +15,11 @@ class LazyObject
 
 	protected $_protect = [ 'password' ];
 
+	protected function setBeforeRender( $closure )
+	{
+		$this->beforeRender = $closure;
+	}
+
 	protected function getId()
 	{
 		return 10;
@@ -28,6 +33,14 @@ class LazyObject
 	protected function getName()
 	{
 		return str_replace( '-' , '_' , $this->name );
+	}
+
+	protected function getAfterRender()
+	{
+		return function()
+		{
+			return 'Welcome';
+		};
 	}
 
 }

@@ -16,6 +16,16 @@ class PropertyAccessorTest extends Tests\TestCase
 		$this->assertEquals( 'Hello_World' , $object->name );
 		$this->assertTrue( $object->active );
 		$this->assertTrue( $object->beforeRender );
+		$this->assertTrue( isset( $object->beforeRender ) );
+		unset( $object->beforeRender );
+		$this->assertNull( $object->beforeRender );
+		$this->assertFalse( isset( $object->beforeRender ) );
+
+		$object->beforeRender = function(){ return "Hello"; };
+
+		$this->assertEquals( 'Hello' , $object->beforeRender() );
+
+		$this->assertEquals( 'Welcome' , $object->afterRender() );
 
 		$this->assertExceptionRegExp( function() use ( $object ){
 
