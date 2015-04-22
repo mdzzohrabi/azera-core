@@ -114,7 +114,7 @@ class String {
 	}
 
 	/**
-	 * Tablelize string
+	 * Tableize string
 	 * 
 	 * "RawScaledScorer"	=> "raw_scaled_scorers"
 	 * "egg_and_ham"		=> "egg_and_hams"
@@ -123,7 +123,7 @@ class String {
 	 * @param  string $string String
 	 * @return string
 	 */
-	public static function tabelize( $string ) {
+	public static function tableize( $string ) {
 
 		return self::pluralize( self::underscore( $string ) );
 

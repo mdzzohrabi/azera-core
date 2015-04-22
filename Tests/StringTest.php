@@ -47,9 +47,9 @@ class StringTest extends \PHPUnit_Framework_TestCase {
 
 	function testTableize() {
 
-		$this->assertEquals( 'raw_scaled_scorers' , String::tabelize( 'RawScaledScorer' ) );
-		$this->assertEquals( 'egg_and_hams' , String::tabelize( 'egg_and_ham' ) );
-		$this->assertEquals( 'fancy_categories' , String::tabelize( 'fancyCategory' )  );
+		$this->assertEquals( 'raw_scaled_scorers' , String::tableize( 'RawScaledScorer' ) );
+		$this->assertEquals( 'egg_and_hams' , String::tableize( 'egg_and_ham' ) );
+		$this->assertEquals( 'fancy_categories' , String::tableize( 'fancyCategory' )  );
 
 	}
 
@@ -63,6 +63,7 @@ class StringTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals( 'X Men: The Last Stand' , String::titleize( "x-men: the last stand" ) );
 		$this->assertEquals( 'Man From The Boondocks' , String::titleize( 'man from the boondocks' ) );
+		$this->assertEquals( 'The Man Without A Past' , String::titleize( 'TheManWithoutAPast' ) );
 
 	}
 
