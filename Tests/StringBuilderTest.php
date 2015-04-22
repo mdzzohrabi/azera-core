@@ -1,7 +1,7 @@
 <?php
 namespace Azera\Core;
 
-class StringBuilderTest extends \PHPUnit_Framework_TestCase
+class StringBuilderTest extends Tests\TestCase
 {
 	
 	function testBuilder()
@@ -26,16 +26,22 @@ class StringBuilderTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertEmpty( (string)$str->clean() );
 
-		$this->assertEquals( 'Hello Masoud' , (new StringBuilder( 'Hello %s' ))->format( 'Masoud' ) );
+		$str = new StringBuilder( 'Hello %s' );
+
+		$this->assertEquals( 'Hello Masoud' , $str->format( 'Masoud' ) );
+
+		$str = new StringBuilder( 'Hello' );
 
 		$this->assertEquals(
 				'Hel_lo',
-				( new StringBuilder( 'Hello' ) )->insert( 3 , '_' )
+				$str->insert( 3 , '_' )
 			);
+
+		$str = new StringBuilder;
 
 		$this->assertEquals(
 				'Dear, Masoud',
-				(new StringBuilder)->write( 'Dear, %s' , 'Masoud' )->toString()
+				$str->write( 'Dear, %s' , 'Masoud' )->toString()
 			);
 
 	}

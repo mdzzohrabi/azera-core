@@ -84,9 +84,9 @@ class Collection implements Iterator, ArrayAccess, Serializable {
 	 * @param mixed $item
 	 * @return Azera\Core\Collection
 	 */
-	public function remove( ...$items )
+	public function remove()
 	{
-
+		$items = func_get_args();
 		foreach ( $items as $item )
 		if ( ( $index = $this->indexOf( $item ) ) !== null )
 			unset( $this->items[ $index ] );
@@ -100,8 +100,10 @@ class Collection implements Iterator, ArrayAccess, Serializable {
 	 * @param  string|int $key Key
 	 * @return Azera\Core\Collection
 	 */
-	public function removeKey( ...$keys )
+	public function removeKey()
 	{
+
+		$keys = func_get_args();
 
 		foreach ( $keys as $key )
 			unset( $this->items[ $key ] );
@@ -115,8 +117,9 @@ class Collection implements Iterator, ArrayAccess, Serializable {
 	 * @param mixed $item
 	 * @return Azera\Core\Collection
 	 */
-	public function add( ...$items )
+	public function add()
 	{
+		$items = func_get_args();
 		$this->items = array_merge( $this->items , $items );
 		return $this;
 	}

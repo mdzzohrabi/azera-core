@@ -3,17 +3,15 @@ namespace Azera\Core\Tests\Fixture;
 
 use Azera\Core\PropertyAccessor;
 
-class LazyObject
+class LazyObject extends PropertyAccessor
 {
-	
-	use PropertyAccessor;
 
 	protected $name;
 	protected $active = true;
 	protected $password = 200;
 	protected $beforeRender = true;
 
-	protected $_protect = [ 'password' ];
+	protected $_protect = array( 'password' );
 
 	protected function setBeforeRender( $closure )
 	{

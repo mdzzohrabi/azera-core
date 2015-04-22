@@ -1,18 +1,18 @@
 <?php
 namespace Azera\Core;
 
-class CollectionTest extends \PHPUnit_Framework_TestCase {
+class CollectionTest extends Tests\TestCase {
 	
 	function testCollection() {
 
-		$arr = new Collection( [
+		$arr = new Collection( array(
 
-				'Users-1' => [ 'Alireza' , 'Masoud' ],
-				'Users-2' => [ 'Navid' , 'Mohammad' ]
+				'Users-1' => array( 'Alireza' , 'Masoud' ),
+				'Users-2' => array( 'Navid' , 'Mohammad' )
 
-			] );
+			) );
 
-		$this->assertEquals( [ 'Navid' , 'Mohammad' ] , $arr->get( 'Users-2' ) );
+		$this->assertEquals( array( 'Navid' , 'Mohammad' ) , $arr->get( 'Users-2' ) );
 
 		$this->assertCount( 2 , $arr );
 
@@ -20,7 +20,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase {
 		$b = unserialize( $a );
 
 		$this->assertEquals( $b , $arr );
-		$this->assertEquals( [ 'Navid' , 'Mohammad' ] , $b['Users-2'] );
+		$this->assertEquals( array( 'Navid' , 'Mohammad' ) , $b['Users-2'] );
 
 		$b->set( 'Blog.name' , 'Personal' );
 		$b->set( 'Blog.author' , 'Masoud Zohrabi' );
@@ -28,22 +28,26 @@ class CollectionTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( 'Personal' , $b->get( 'Blog.name' ) );
 		$this->assertInternalType( 'array' , $b['Blog'] );
 		$this->assertEquals( 'Masoud Zohrabi' , $b->get( 'Blog.author' ) );
-		$this->assertEquals( [ 'name' => 'Personal' , 'author' => 'Masoud Zohrabi' ] , $b['Blog'] );
+		$this->assertEquals( array( 'name' => 'Personal' , 'author' => 'Masoud Zohrabi' ) , $b['Blog'] );
 		$this->assertEquals( 'Navid' , $b->get('Users-2.0') );
 
-		$this->assertEquals( [
-				'Users-1'	=> [ 'Alireza' , 'Masoud' ]
-			] , $arr->getItems( [ 'Users-1' ] ) );
+		$this->assertEquals( array(
+				
+				'Users-1'	=> array( 'Alireza' , 'Masoud' )
 
-		$this->assertTrue( ( new Collection( [ 'Hello' , 'Goodbye' ] ) )->contains( 'Hello' ) );
+			) , $arr->getItems( array( 'Users-1' ) ) );
 
-		$this->assertTrue( $arr->contains( [ 'Alireza' , 'Masoud' ] ) );
+		$c = new Collection( array( 'Hello' , 'Goodbye' ) );
+
+		$this->assertTrue( $c->contains( 'Hello' ) );
+
+		$this->assertTrue( $arr->contains( array( 'Alireza' , 'Masoud' ) ) );
 
 		$this->assertTrue( $arr->has( 'Users-1' ) );
 
-		$this->assertEquals( 'Users-1' , $arr->indexOf( [ 'Alireza' , 'Masoud' ] ) );
+		$this->assertEquals( 'Users-1' , $arr->indexOf( array( 'Alireza' , 'Masoud' ) ) );
 
-		$this->assertFalse( $arr->remove( [ 'Alireza' , 'Masoud' ] )->contains( [ 'Alireza' , 'Masoud' ] ) );
+		$this->assertFalse( $arr->remove( array( 'Alireza' , 'Masoud' ) )->contains( array( 'Alireza' , 'Masoud' ) ) );
 
 		$this->assertFalse( $arr->has( 'Users-1' ) );
 

@@ -31,13 +31,13 @@ class String {
 	public static function camelize( $string , $upper = true ) {
 
 		if ( $upper )
-			$string = preg_replace_callback( '/^[a-z0-9]+/' , function( $find ){ return self::capitalize( $find[0] ); } , $string );
+			$string = preg_replace_callback( '/^[a-z0-9]+/' , function( $find ){ return String::capitalize( $find[0] ); } , $string );
 		else
 			$string = preg_replace_callback( '/^[a-z0-9]+/' , function( $find ){ return strtolower( $find[0] ); } , $string );
 
 		$string = preg_replace_callback( '/(_|\\/)([a-z0-9]+)/' , function( $find ){
 
-			return self::capitalize( $find[2] );
+			return String::capitalize( $find[2] );
 
 		} , $string );
 
@@ -73,7 +73,7 @@ class String {
 
 		if ( !preg_match( '/[A-Z-]|::/' , $string ) ) return $string;
 
-		$string = strtr( $string , [ '::' => '/' , '-' => '_' ] );
+		$string = strtr( $string , array( '::' => '/' , '-' => '_' ) );
 
 		$string = preg_replace( '/([A-Z\d]+)([A-Z][a-z])/' , '$1_$2' , $string );
 

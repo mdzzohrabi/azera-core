@@ -4,11 +4,9 @@ namespace Azera\Core;
 use ArrayAccess;
 use Iterator;
 
-class StringBuilder implements ArrayAccess, Iterator
+class StringBuilder extends PropertyAccessor implements ArrayAccess, Iterator
 {
 
-	use PropertyAccessor;
-	
 	protected $buffer = '';
 	protected $cursor = 0;
 	protected $indent = 0;
@@ -37,9 +35,10 @@ class StringBuilder implements ArrayAccess, Iterator
 		return $this;
 	}
 
-	public function format( ...$params )
+	public function format()
 	{
-		return sprintf( $this->buffer , ...$params );
+		$params = func_get_args();
+		return call_user_func_array( 'sprintf' , array_merge( array( $this->buffer ) , $params ) );
 	}
 
 	public function replace( $find , $replace = null )
@@ -63,21 +62,24 @@ class StringBuilder implements ArrayAccess, Iterator
 		return strpos( $this->buffer , $str );
 	}
 
-	public function append( $string , ...$params )
+	public function append( $string )
 	{
-		$this->buffer .= $params ? sprintf( $string , $params ) : $string;
+		$params = array_slice( func_get_args() , 1 );
+		$this->buffer .= $params ? call_user_func_array( 'sprintf' , array_merge( array( $string ) , $params ) ) : $string;
 		return $this;
 	}
 
-	public function write( $string , ...$params )
+	public function write( $string )
 	{
-		$this->buffer .= $params ? sprintf( $string , ...$params ) : $string;
+		$params = array_slice( func_get_args() , 1 );
+		$this->buffer .= $params ? call_user_func_array( 'sprintf' , array_merge( array( $string ) , $params ) ) : $string;
 		return $this;
 	}
 
-	public function writeln( $string , ...$params )
+	public function writeln( $string )
 	{
-		$this->buffer .= str_repeat( "\t" , $this->indent ) . ( $params ? sprintf( $string , ...$params ) : $string ) . PHP_EOL;
+		$params = array_slice( func_get_args() , 1 );
+		$this->buffer .= str_repeat( "\t" , $this->indent ) . ( $params ? call_user_func_array( 'sprintf' , array_merge( array( $string ) , $params ) ) : $string ) . PHP_EOL;
 		return $this;
 	}
 

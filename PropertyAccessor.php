@@ -1,7 +1,7 @@
 <?php
 namespace Azera\Core;
 
-trait PropertyAccessor
+class PropertyAccessor
 {
 
 	private $setterMap = array();
@@ -61,7 +61,7 @@ trait PropertyAccessor
 		if ( property_exists( $this , $method ) && is_callable( $this->{$method} ) )
 			return call_user_func_array( $this->{$method} , $params );
 
-		else if  ( method_exists( $this , $getter = ( $this->getterMap[$method] ?: $this->getterMap[$method] = 'get' . String::humanize( $method ) ) ) && ( is_callable( $call = call_user_func( [ $this , $getter ] ) ) ) )
+		else if  ( method_exists( $this , $getter = ( $this->getterMap[$method] ?: $this->getterMap[$method] = 'get' . String::humanize( $method ) ) ) && ( is_callable( $call = call_user_func( array( $this , $getter ) ) ) ) )
 			return call_user_func_array( $call , $params );
 
 		throw new \BadMethodCallException( sprintf( '`%s` callable property not found in %s' , $method , get_class($this) ) );
