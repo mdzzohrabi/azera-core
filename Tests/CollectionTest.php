@@ -25,10 +25,17 @@ class CollectionTest extends \PHPUnit_Framework_TestCase {
 		$b->set( 'Blog.name' , 'Personal' );
 		$b->set( 'Blog.author' , 'Masoud Zohrabi' );
 
+		$this->assertTrue( $b->has( 'Blog' ) );
+		$this->assertTrue( $b->has( 'Blog.author' ) );
+		$this->assertFalse( $b->has( 'Comment' ) );
+		$this->assertFalse( $b->has( 'Blog.id' ) );
+
 		$this->assertEquals( 'Personal' , $b->get( 'Blog.name' ) );
+		$b->set( 'Blog.name' , 'Alireza' );
+		$this->assertEquals( 'Alireza' , $b->get( 'Blog.name' ) );
 		$this->assertInternalType( 'array' , $b['Blog'] );
 		$this->assertEquals( 'Masoud Zohrabi' , $b->get( 'Blog.author' ) );
-		$this->assertEquals( [ 'name' => 'Personal' , 'author' => 'Masoud Zohrabi' ] , $b['Blog'] );
+		$this->assertEquals( [ 'name' => 'Alireza' , 'author' => 'Masoud Zohrabi' ] , $b['Blog'] );
 		$this->assertEquals( 'Navid' , $b->get('Users-2.0') );
 
 		$this->assertEquals( [

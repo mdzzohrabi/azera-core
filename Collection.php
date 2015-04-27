@@ -140,7 +140,7 @@ class Collection implements Iterator, ArrayAccess, Serializable {
 	 */
 	public function has( $key )
 	{
-		return isset( $this->items[ $key ] );
+		return eval( 'return isset( $this->items' . $this->nodelize($key) . ' );');
 	}
 
 	/**
