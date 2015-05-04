@@ -64,6 +64,10 @@ class CollectionTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertFalse( $arr->removeKey( 'Users-2' )->has( 'Users-2' ) ); 
 
+		$arr->add( array( 'database' => array( 'host' => 'localhost' ) ) );
+
+		$this->assertEquals( 'localhost' , $arr->get( 'database.host' ) );
+
 	}
 
 }

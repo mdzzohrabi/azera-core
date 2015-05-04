@@ -14,7 +14,7 @@ use Iterator,
  */
 class Collection implements Iterator, ArrayAccess, Serializable {
 
-	private $items = array();
+	protected $items = array();
 	
 	public function __construct( array $items = array() ) {
 
@@ -117,7 +117,8 @@ class Collection implements Iterator, ArrayAccess, Serializable {
 	 */
 	public function add( ...$items )
 	{
-		$this->items = array_merge( $this->items , $items );
+		foreach ( $items as &$item ) $item = (array)$item;
+		$this->items = array_merge( $this->items , ...$items );
 		return $this;
 	}
 
