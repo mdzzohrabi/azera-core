@@ -1,6 +1,7 @@
 <?php
 namespace Azera\Core;
 
+use Countable;
 use Iterator,
 	ArrayAccess,
 	Serializable;
@@ -12,22 +13,30 @@ use Iterator,
  * @author 	Masoud Zohrabi <mdzzohrabi@gmail.com>
  * @license MIT
  */
-class Collection implements Iterator, ArrayAccess, Serializable {
+class Collection implements Iterator, ArrayAccess, Serializable, Countable {
 
+	/**
+	 * @var array
+	 */
 	protected $items = array();
-	
+
+	/**
+	 * @param array $items
+	 */
 	public function __construct( array $items = array() ) {
-
 		$this->items = $items;
-
 	}
 
+	/**
+	 * @param $key
+	 * @return string
+	 */
 	private function nodelize( $key ) {
 		return '["' . str_replace( '.' , '"]["' , $key ) . '"]';
 	}
 
 	/**
-	 * Retreive node value
+	 * Retrieve node value
 	 * 
 	 * ```php
 	 * Collection->get( 'Post.Comment' );
@@ -56,11 +65,13 @@ class Collection implements Iterator, ArrayAccess, Serializable {
 
 	/**
 	 * Set items repository by reference
-	 * 
+	 *
 	 * @param array $ref
+	 * @return $this
 	 */
 	public function setReference( &$ref ) {
 		$this->items = $ref;
+		return $this;
 	}
 
 	/**
@@ -80,9 +91,9 @@ class Collection implements Iterator, ArrayAccess, Serializable {
 
 	/**
 	 * Remove an item from list
-	 * 
-	 * @param mixed $item
-	 * @return Azera\Core\Collection
+	 *
+	 * @param $items
+	 * @return Collection
 	 */
 	public function remove( ...$items )
 	{
@@ -97,8 +108,8 @@ class Collection implements Iterator, ArrayAccess, Serializable {
 	/**
 	 * Remove key from collection
 	 * 
-	 * @param  string|int $key Key
-	 * @return Azera\Core\Collection
+	 * @param  array $keys Key
+	 * @return Collection
 	 */
 	public function removeKey( ...$keys )
 	{
@@ -111,9 +122,9 @@ class Collection implements Iterator, ArrayAccess, Serializable {
 
 	/**
 	 * Add an item to list
-	 * 
-	 * @param mixed $item
-	 * @return Azera\Core\Collection
+	 *
+	 * @param $items
+	 * @return Collection
 	 */
 	public function add( ...$items )
 	{
@@ -169,8 +180,10 @@ class Collection implements Iterator, ArrayAccess, Serializable {
 
 	/**
 	 * Get Queryable object
+	 * @return \Azera\Component\Queryable\Queryable
 	 */
 	public function asQueryable() {
+		/** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 		return new \Azera\Component\Queryable\Queryable( $this->items );
 	}
 
@@ -216,6 +229,21 @@ class Collection implements Iterator, ArrayAccess, Serializable {
 
 	public function unserialize( $serialized ) {
 		$this->items = unserialize( $serialized );
+	}
+
+	/**
+	 * (PHP 5 &gt;= 5.1.0)<br/>
+	 * Count elements of an object
+	 *
+	 * @link http://php.net/manual/en/countable.count.php
+	 * @return int The custom count as an integer.
+	 *       </p>
+	 *       <p>
+	 *       The return value is cast to an integer.
+	 */
+	public function count()
+	{
+		return count( $this->items );
 	}
 
 }

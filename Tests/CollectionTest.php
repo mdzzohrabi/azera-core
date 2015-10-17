@@ -1,8 +1,16 @@
 <?php
 namespace Azera\Core;
 
-class CollectionTest extends \PHPUnit_Framework_TestCase {
-	
+use Azera\Core\Tests\TestCase;
+
+/**
+ * Class CollectionTest
+ *
+ * @package Azera\Core
+ * @author  Masoud Zohrabi <mdzzohrabi@gmail.com>
+ */
+class CollectionTest extends TestCase {
+
 	function testCollection() {
 
 		$arr = new Collection( [
@@ -67,6 +75,15 @@ class CollectionTest extends \PHPUnit_Framework_TestCase {
 		$arr->add( array( 'database' => array( 'host' => 'localhost' ) ) );
 
 		$this->assertEquals( 'localhost' , $arr->get( 'database.host' ) );
+
+		$arr = new Collection();
+
+		$this->assertTrue( $arr instanceof \Countable );
+		$this->assertEquals( [] , $arr->toArray() );
+		$this->assertEquals( 0 , count($arr) );
+		$this->assertEmpty( $arr );
+		$this->assertCount( 0 , $arr );
+
 
 	}
 

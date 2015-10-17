@@ -19,6 +19,9 @@
     "suggest": {
         "mdzzohrabi/azera-queryable": "Gives you more productivy"
     },
+    "require-dev": {
+        "mdzzohrabi/azera-queryable": "dev-master"
+    },
     "autoload": {
         "psr-4": {
             "Azera\\Core\\": ""
