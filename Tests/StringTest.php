@@ -34,6 +34,7 @@ class StringTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( 'rubies' , String::pluralize( 'ruby' ) );
 		$this->assertEquals( 'people' , String::pluralize( 'person' ) );
 		$this->assertEquals( 'categories' , String::pluralize( 'category' ) );
+		$this->assertEquals( 'news' , String::pluralize( 'news' ) );
 
 	}
 

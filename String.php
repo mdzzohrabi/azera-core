@@ -12,7 +12,15 @@ class String {
 
 	private static $plural = array(
 
-			'person'	=> 'people'
+			'person'	=> 'people',
+			'life'		=> 'lives',
+			'calf'		=> 'calves',
+			'leaf'		=> 'leaves',
+			'knife'		=> 'knives',
+			'news'		=> 'news',
+			'billiards'	=> 'billiards',
+			'mathematics'	=> 'mathematics',
+			'physics'	=> 'physics'
 
 		);
 	
