@@ -20,13 +20,13 @@ class StringBuilderTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertEquals( 'Hello_World' , (string)$str );
 		
-		$this->assertEquals( 11 , $str->length );
+		$this->assertEquals( 11 , $str->getLength() );
 
 		$this->assertEquals( 5 , $str->indexOf( '_' ) );
 
 		$this->assertEmpty( (string)$str->clean() );
 
-		$this->assertEquals( 'Hello Masoud' , (new StringBuilder( 'Hello %s' ))->format( 'Masoud' ) );
+		$this->assertEquals( 'Hello Masoud' , (new StringBuilder( 'Hello %s' ))->inject( 'Masoud' ) );
 
 		$this->assertEquals(
 				'Hel_lo',

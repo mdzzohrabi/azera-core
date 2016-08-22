@@ -1,7 +1,13 @@
 <?php
 namespace Azera\Core\Tests;
 
-class TestCase extends \PHPUnit_Framework_TestCase {
+use PHPUnit_Framework_TestCase;
+
+/**
+ * Class TestCase
+ * @package Azera\Core\Tests
+ */
+class TestCase extends PHPUnit_Framework_TestCase {
 	
 	protected function assertExceptionRegExp( $callable , $regexp )
 	{
@@ -14,7 +20,6 @@ class TestCase extends \PHPUnit_Framework_TestCase {
 		} catch ( \Exception $e ) {
 			if ( !preg_match( $regexp , $e->getMessage() ) )
 				$this->assertRegExp( $regexp , $e->getMessage() );
-//				$this->fail( sprintf( 'Fail asserting exception message `%s` in `%s`' , $regexp , $e->getMessage() ) );
 		}
 	}
 

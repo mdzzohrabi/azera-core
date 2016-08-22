@@ -2,28 +2,41 @@
 namespace Azera\Core;
 
 use ArrayAccess;
+use Countable;
 use Iterator;
 
-class StringBuilder implements ArrayAccess, Iterator
+/**
+ * Class StringBuilder
+ * @package Azera\Core
+ */
+class StringBuilder implements ArrayAccess, Iterator, Countable
 {
 
-	use PropertyAccessor;
-	
+    /** @var string  */
 	protected $buffer = '';
 	protected $cursor = 0;
 	protected $indent = 0;
 
-	protected function getLength()
-	{
-		return strlen( $this->buffer );
-	}
-
-
-
+    /**
+     * StringBuilder constructor.
+     *
+     * @param string $string
+     */
 	public function __construct( $string = null )
 	{
 		$this->buffer = $string;
 	}
+
+    public function inject() {
+        $this->buffer = call_user_func_array( 'sprintf' , array_merge( [ $this->buffer ] , func_get_args() ) );
+        return $this;
+    }
+
+    /** @return int */
+    public function getLength()
+    {
+        return strlen( $this->buffer );
+    }
 
 	public function indent()
 	{
@@ -37,11 +50,17 @@ class StringBuilder implements ArrayAccess, Iterator
 		return $this;
 	}
 
-	public function format( ...$params )
+	protected function format()
 	{
-		return sprintf( $this->buffer , ...$params );
+		return call_user_func_array( 'sprintf' , func_get_args() );
 	}
 
+    /**
+     * @param array|string     $find
+     * @param string           $replace
+     *
+     * @return $this
+     */
 	public function replace( $find , $replace = null )
 	{
 		if ( is_array( $find ) )
@@ -52,32 +71,43 @@ class StringBuilder implements ArrayAccess, Iterator
 		return $this;
 	}
 
+    /**
+     * @param int       $offset
+     * @param string    $string
+     *
+     * @return $this
+     */
 	public function insert( $offset , $string )
 	{
 		$this->buffer = substr( $this->buffer , 0 , $offset ) . $string . substr( $this->buffer , $offset );
 		return $this;
 	}
 
+    /**
+     * @param string $str
+     *
+     * @return int
+     */
 	public function indexOf( $str )
 	{
 		return strpos( $this->buffer , $str );
 	}
 
-	public function append( $string , ...$params )
+	public function append()
 	{
-		$this->buffer .= $params ? sprintf( $string , $params ) : $string;
+		$this->buffer .= call_user_func_array( 'sprintf' , func_get_args() );
 		return $this;
 	}
 
-	public function write( $string , ...$params )
+	public function write()
 	{
-		$this->buffer .= $params ? sprintf( $string , ...$params ) : $string;
+		$this->buffer .= call_user_func_array( 'sprintf' , func_get_args() );
 		return $this;
 	}
 
-	public function writeln( $string , ...$params )
+	public function writeln()
 	{
-		$this->buffer .= str_repeat( "\t" , $this->indent ) . ( $params ? sprintf( $string , ...$params ) : $string ) . PHP_EOL;
+		$this->buffer .= str_repeat( "\t" , $this->indent ) . call_user_func_array( 'sprintf' , func_get_args() ) . PHP_EOL;
 		return $this;
 	}
 
@@ -131,30 +161,41 @@ class StringBuilder implements ArrayAccess, Iterator
 		return isset( $this->buffer[ $offset ] );
 	}
 
+    /** {@inheritdoc} */
 	public function current()
 	{
 		return $this->buffer[ $this->cursor ];
 	}
 
+    /** {@inheritdoc} */
 	public function key()
 	{
 		return $this->cursor;
 	}
 
+    /** {@inheritdoc} */
 	public function next()
 	{
 		$this->cursor++;
 	}
 
+    /** {@inheritdoc} */
 	public function rewind()
 	{
 		$this->cursor = 0;
 	}
 
+    /** {@inheritdoc} */
 	public function valid()
 	{
-		return $this->buffer[ $this->cursor ];
+		return isset( $this->buffer[ $this->cursor ] );
 	}
+
+    /** {@inheritdoc} */
+    public function count()
+    {
+        return strlen( $this->buffer );
+    }
 
 }
 ?>
